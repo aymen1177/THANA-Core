@@ -2,29 +2,26 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Service extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
+        'category_id',
         'provider_id',
         'title',
-        'category',
         'description',
         'price',
         'status',
     ];
 
-    public function provider()
+    public function category()
     {
-        return $this->belongsTo(ServiceProvider::class);
+        return $this->belongsTo(Category::class);
     }
 
-    public function orders()
+    public function provider()
     {
-        return $this->hasMany(Order::class);
+        return $this->belongsTo(ServiceProvider::class, 'provider_id');
     }
 }
