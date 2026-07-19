@@ -1,12 +1,14 @@
 <x-app-layout>
 
     <x-slot name="header">
-        <h2>تعديل التصنيف</h2>
+        <h2>إضافة مقدم خدمة</h2>
     </x-slot>
+
 
     <div style="max-width:800px;margin:30px auto;padding:20px;">
 
         <div style="background:#fff;padding:25px;border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,.1);">
+
 
             @if ($errors->any())
 
@@ -26,82 +28,78 @@
 
             @endif
 
-            <form action="{{ route('categories.update', $category) }}" method="POST">
+
+            <form action="{{ route('service_providers.store') }}" method="POST">
 
                 @csrf
-                @method('PUT')
+
 
                 <div style="margin-bottom:15px;">
 
-                    <label>المجال</label>
+                    <label>اسم النشاط</label>
 
-                    <select
-                        name="domain_id"
+                    <input
+                        type="text"
+                        name="business_name"
+                        value="{{ old('business_name') }}"
                         style="width:100%;padding:10px;border:1px solid #ccc;border-radius:6px;">
 
-                        @foreach($domains as $domain)
-
-                            <option value="{{ $domain->id }}"
-                                {{ $category->domain_id == $domain->id ? 'selected' : '' }}>
-
-                                {{ $domain->name_ar }}
-
-                            </option>
-
-                        @endforeach
-
-                    </select>
-
                 </div>
+
 
                 <div style="margin-bottom:15px;">
 
-                    <label>الاسم بالعربية</label>
+                    <label>الهاتف</label>
 
                     <input
                         type="text"
-                        name="name_ar"
-                        value="{{ old('name_ar', $category->name_ar) }}"
+                        name="phone"
+                        value="{{ old('phone') }}"
                         style="width:100%;padding:10px;border:1px solid #ccc;border-radius:6px;">
 
                 </div>
+
 
                 <div style="margin-bottom:15px;">
 
-                    <label>الاسم بالفرنسية</label>
+                    <label>العنوان</label>
 
                     <input
                         type="text"
-                        name="name_fr"
-                        value="{{ old('name_fr', $category->name_fr) }}"
+                        name="address"
+                        value="{{ old('address') }}"
                         style="width:100%;padding:10px;border:1px solid #ccc;border-radius:6px;">
 
                 </div>
 
-                <div style="margin-bottom:20px;">
 
-                    <label>الاسم بالإنجليزية</label>
+                <div style="margin-bottom:15px;">
 
-                    <input
-                        type="text"
-                        name="name_en"
-                        value="{{ old('name_en', $category->name_en) }}"
-                        style="width:100%;padding:10px;border:1px solid #ccc;border-radius:6px;">
+                    <label>الوصف</label>
+
+                    <textarea
+                        name="description"
+                        rows="5"
+                        style="width:100%;padding:10px;border:1px solid #ccc;border-radius:6px;">{{ old('description') }}</textarea>
 
                 </div>
+
 
                 <button
                     type="submit"
                     style="background:#2563eb;color:#fff;border:none;padding:10px 20px;border-radius:6px;cursor:pointer;">
 
-                    حفظ التعديلات
+                    حفظ مقدم الخدمة
 
                 </button>
 
+
             </form>
+
 
         </div>
 
     </div>
+
 
 </x-app-layout>

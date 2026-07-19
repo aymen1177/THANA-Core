@@ -24,17 +24,21 @@ class ServiceController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'category_id' => 'required|exists:service_categories,id',
+            'name' => 'required|max:150',
+            'description' => 'nullable',
+            'status' => 'required|boolean',
+        ]);
+
         Service::create([
             'category_id' => $request->category_id,
-            'category' => $request->category_id,
-            'provider_id' => null,
-            'title' => $request->title,
+            'name' => $request->name,
             'description' => $request->description,
-            'price' => $request->price,
             'status' => $request->status,
         ]);
 
-        return redirect('/services');
+        return redirect()->route('services.index');
     }
 
     public function edit(Service $service)
@@ -46,22 +50,27 @@ class ServiceController extends Controller
 
     public function update(Request $request, Service $service)
     {
+        $request->validate([
+            'category_id' => 'required|exists:service_categories,id',
+            'name' => 'required|max:150',
+            'description' => 'nullable',
+            'status' => 'required|boolean',
+        ]);
+
         $service->update([
             'category_id' => $request->category_id,
-            'category' => $request->category_id,
-            'title' => $request->title,
+            'name' => $request->name,
             'description' => $request->description,
-            'price' => $request->price,
             'status' => $request->status,
         ]);
 
-        return redirect('/services');
+        return redirect()->route('services.index');
     }
 
     public function destroy(Service $service)
     {
         $service->delete();
 
-        return redirect('/services');
+        return redirect()->route('services.index');
     }
 }

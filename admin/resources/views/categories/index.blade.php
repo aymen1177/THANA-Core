@@ -1,62 +1,91 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<x-app-layout>
 
-<head>
-    <meta charset="UTF-8">
-    <title>التصنيفات - THANA.DZ</title>
-</head>
+    <x-slot name="header">
+        <h2>إدارة التصنيفات</h2>
+    </x-slot>
 
-<body>
+    <div style="max-width:1100px;margin:30px auto;padding:20px;">
 
-<h1>إدارة التصنيفات</h1>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
 
-<a href="/categories/create">
-    إضافة تصنيف جديد
-</a>
+            <h3>قائمة التصنيفات</h3>
 
-<br><br>
+            <a href="{{ route('categories.create') }}"
+               style="background:#2563eb;color:#fff;padding:10px 18px;border-radius:6px;text-decoration:none;">
+                إضافة تصنيف
+            </a>
 
-<table border="1" cellpadding="10">
+        </div>
 
-<tr>
-    <th>الرقم</th>
-    <th>العربية</th>
-    <th>الفرنسية</th>
-    <th>الإنجليزية</th>
-    <th>الإجراءات</th>
-</tr>
+        <table style="width:100%;border-collapse:collapse;text-align:center;">
 
-@foreach($categories as $category)
+            <thead>
 
-<tr>
-    <td>{{ $category->id }}</td>
-    <td>{{ $category->name_ar }}</td>
-    <td>{{ $category->name_fr }}</td>
-    <td>{{ $category->name_en }}</td>
+                <tr style="background:#f3f4f6;">
+                    <th style="border:1px solid #ccc;padding:10px;">#</th>
+                    <th style="border:1px solid #ccc;padding:10px;">العربية</th>
+                    <th style="border:1px solid #ccc;padding:10px;">Français</th>
+                    <th style="border:1px solid #ccc;padding:10px;">English</th>
+                    <th style="border:1px solid #ccc;padding:10px;">الإجراءات</th>
+                </tr>
 
-    <td>
+            </thead>
 
-        <a href="/categories/{{ $category->id }}/edit">
-            تعديل
-        </a>
+            <tbody>
 
-        <form action="/categories/{{ $category->id }}" method="POST">
+            @foreach($categories as $category)
 
-            @csrf
-            @method('DELETE')
+                <tr>
 
-            <button type="submit">
-                حذف
-            </button>
+                    <td style="border:1px solid #ccc;padding:10px;">
+                        {{ $category->id }}
+                    </td>
 
-        </form>
+                    <td style="border:1px solid #ccc;padding:10px;">
+                        {{ $category->name_ar }}
+                    </td>
 
-    </td>
-</tr>
+                    <td style="border:1px solid #ccc;padding:10px;">
+                        {{ $category->name_fr }}
+                    </td>
 
-@endforeach
+                    <td style="border:1px solid #ccc;padding:10px;">
+                        {{ $category->name_en }}
+                    </td>
 
-</table>
+                    <td style="border:1px solid #ccc;padding:10px;">
 
-</body>
-</html>
+                        <a href="{{ route('categories.edit', $category) }}"
+                           style="color:#2563eb;text-decoration:none;margin-left:10px;">
+                            تعديل
+                        </a>
+
+                        <form action="{{ route('categories.destroy', $category) }}"
+                              method="POST"
+                              style="display:inline;">
+
+                            @csrf
+                            @method('DELETE')
+
+                            <button
+                                type="submit"
+                                onclick="return confirm('هل أنت متأكد من حذف هذا التصنيف؟')"
+                                style="background:#dc2626;color:#fff;border:none;padding:6px 12px;border-radius:5px;cursor:pointer;">
+                                حذف
+                            </button>
+
+                        </form>
+
+                    </td>
+
+                </tr>
+
+            @endforeach
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</x-app-layout>

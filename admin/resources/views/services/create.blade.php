@@ -1,70 +1,109 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<x-app-layout>
 
-<head>
-    <meta charset="UTF-8">
-    <title>إضافة خدمة - THANA.DZ</title>
-</head>
+    <x-slot name="header">
+        <h2>إضافة خدمة جديدة</h2>
+    </x-slot>
 
-<body>
+    <div style="max-width:800px;margin:30px auto;padding:20px;">
 
-<h1>إضافة خدمة جديدة</h1>
+        <div style="background:#fff;padding:25px;border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,.1);">
 
-<form action="/services" method="POST">
+            @if ($errors->any())
 
-    @csrf
+                <div style="background:#fee2e2;color:#b91c1c;padding:12px;border-radius:6px;margin-bottom:20px;">
 
-    <label>التصنيف</label><br>
+                    <ul>
 
-    <select name="category_id">
+                        @foreach($errors->all() as $error)
 
-        @foreach($categories as $category)
+                            <li>{{ $error }}</li>
 
-        <option value="{{ $category->id }}">
-            {{ $category->name_ar }}
-        </option>
+                        @endforeach
 
-        @endforeach
+                    </ul>
 
-    </select>
+                </div>
 
-    <br><br>
+            @endif
 
-    <label>اسم الخدمة</label><br>
+            <form action="{{ route('services.store') }}" method="POST">
 
-    <input type="text" name="title">
+                @csrf
 
-    <br><br>
+                <div style="margin-bottom:15px;">
 
-    <label>الوصف</label><br>
+                    <label>التصنيف</label>
 
-    <textarea name="description"></textarea>
+                    <select
+                        name="category_id"
+                        style="width:100%;padding:10px;border:1px solid #ccc;border-radius:6px;">
 
-    <br><br>
+                        <option value="">اختر التصنيف</option>
 
-    <label>السعر</label><br>
+                        @foreach($categories as $category)
 
-    <input type="number" name="price">
+                            <option value="{{ $category->id }}">
 
-    <br><br>
+                                {{ $category->name_ar }}
 
-    <label>الحالة</label><br>
+                            </option>
 
-    <select name="status">
+                        @endforeach
 
-        <option value="active">نشطة</option>
-        <option value="inactive">غير نشطة</option>
+                    </select>
 
-    </select>
+                </div>
 
-    <br><br>
+                <div style="margin-bottom:15px;">
 
-    <button type="submit">
-        حفظ
-    </button>
+                    <label>اسم الخدمة</label>
 
-</form>
+                    <input
+                        type="text"
+                        name="name"
+                        value="{{ old('name') }}"
+                        style="width:100%;padding:10px;border:1px solid #ccc;border-radius:6px;">
 
-</body>
+                </div>
 
-</html>
+                <div style="margin-bottom:15px;">
+
+                    <label>الوصف</label>
+
+                    <textarea
+                        name="description"
+                        rows="5"
+                        style="width:100%;padding:10px;border:1px solid #ccc;border-radius:6px;">{{ old('description') }}</textarea>
+
+                </div>
+
+                <div style="margin-bottom:20px;">
+
+                    <label>الحالة</label>
+
+                    <select
+                        name="status"
+                        style="width:100%;padding:10px;border:1px solid #ccc;border-radius:6px;">
+
+                        <option value="1">نشطة</option>
+                        <option value="0">غير نشطة</option>
+
+                    </select>
+
+                </div>
+
+                <button
+                    type="submit"
+                    style="background:#2563eb;color:#fff;border:none;padding:10px 20px;border-radius:6px;cursor:pointer;">
+
+                    حفظ الخدمة
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</x-app-layout>
