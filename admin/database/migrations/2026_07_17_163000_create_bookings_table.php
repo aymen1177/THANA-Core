@@ -8,33 +8,33 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('bookings', function (Blueprint $table) {
 
             $table->id();
 
-            $table->foreignId('customer_id')
-                  ->constrained('users')
+            $table->foreignId('user_id')
+                  ->constrained()
                   ->cascadeOnDelete();
 
-            $table->foreignId('provider_id')
-                  ->constrained('service_providers')
+            $table->foreignId('provider_service_id')
+                  ->constrained()
                   ->cascadeOnDelete();
 
-            $table->foreignId('service_id')
-                  ->constrained('services')
-                  ->cascadeOnDelete();
+            $table->dateTime('booking_date')
+                  ->nullable();
 
-            $table->enum('order_status', [
+            $table->enum('status', [
                 'pending',
                 'accepted',
+                'rejected',
                 'completed',
                 'cancelled'
             ])->default('pending');
 
-            $table->dateTime('appointment_date')
+            $table->decimal('total_amount', 10, 2)
                   ->nullable();
 
-            $table->decimal('total_price', 10, 2)
+            $table->text('notes')
                   ->nullable();
 
             $table->timestamps();
@@ -44,6 +44,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('bookings');
     }
 };

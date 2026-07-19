@@ -16,21 +16,42 @@ return new class extends Migration
                   ->constrained()
                   ->cascadeOnDelete();
 
-            $table->string('profession', 150);
-
-            $table->integer('experience_years')
-                  ->default(0);
+            $table->string('business_name', 150);
 
             $table->text('description')
                   ->nullable();
 
-            $table->decimal('rating', 2, 1)
-                  ->default(0);
+            $table->string('logo')
+                  ->nullable();
 
-            $table->boolean('is_available')
-                  ->default(true);
+            $table->string('phone', 20)
+                  ->nullable();
+
+            $table->text('address')
+                  ->nullable();
+
+            $table->decimal('latitude', 10, 8)
+                  ->nullable();
+
+            $table->decimal('longitude', 11, 8)
+                  ->nullable();
+
+            $table->enum('verification_status', [
+                'pending',
+                'approved',
+                'rejected'
+            ])->default('pending');
+
+            $table->enum('status', [
+                'active',
+                'inactive',
+                'blocked'
+            ])->default('active');
 
             $table->timestamps();
+
+            $table->softDeletes();
+
         });
     }
 

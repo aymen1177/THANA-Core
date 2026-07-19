@@ -12,24 +12,20 @@ return new class extends Migration
 
             $table->id();
 
-            $table->foreignId('provider_id')
-                  ->constrained('service_providers')
+            $table->foreignId('category_id')
+                  ->constrained('service_categories')
                   ->cascadeOnDelete();
 
-            $table->string('title', 150);
-
-            $table->string('category', 100);
+            $table->string('name', 150);
 
             $table->text('description')
                   ->nullable();
 
-            $table->decimal('price', 10, 2)
+            $table->string('image')
                   ->nullable();
 
-            $table->enum('status', [
-                'active',
-                'inactive'
-            ])->default('active');
+            $table->boolean('status')
+                  ->default(true);
 
             $table->timestamps();
 

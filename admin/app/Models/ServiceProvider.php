@@ -2,20 +2,24 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ServiceProvider extends Model
 {
-    use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = [
         'user_id',
-        'profession',
-        'experience_years',
+        'business_name',
         'description',
-        'rating',
-        'is_available',
+        'logo',
+        'phone',
+        'address',
+        'latitude',
+        'longitude',
+        'verification_status',
+        'status',
     ];
 
     public function user()
@@ -23,13 +27,8 @@ class ServiceProvider extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function services()
+    public function providerServices()
     {
-        return $this->hasMany(Service::class);
-    }
-
-    public function orders()
-    {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(ProviderService::class);
     }
 }
